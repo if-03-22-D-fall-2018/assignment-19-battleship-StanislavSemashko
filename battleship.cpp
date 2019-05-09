@@ -68,19 +68,26 @@ bool shoot(int row, int col)
   }
   if (other_cell_content[row][col] == Boat)
   {
-    guess_cell_content[row+1][col] = Water;
-    guess_cell_content[row-1][col] = Water;
 
-    guess_cell_content[row][col+1] = Water;
-    guess_cell_content[row][col-1] = Water;
+    for (int i = row-1; i <= row+1; i++)
+    {
+      for (int j = col-1; j <= col+1; j++)
+      {
+        if (i < 0 || i >= FIELDSIZE || j < 0 || j >= FIELDSIZE)
+        {
 
-    guess_cell_content[row+1][col-1] = Water;
-    guess_cell_content[row-1][col+1] = Water;
+        }
+        else if (i != row || col != j)
+        {
+          guess_cell_content[i][j] = Water;
+        }
+        else
+        {
+          guess_cell_content[row][col] = other_cell_content[row][col];
+        }
 
-    guess_cell_content[row+1][col+1] = Water;
-    guess_cell_content[row-1][col-1] = Water;
-
-    guess_cell_content[row][col] = other_cell_content[row][col];
+      }
+    }
     return true;
   }
   guess_cell_content[row][col] = other_cell_content[row][col];
